@@ -30,13 +30,14 @@ export default {
   methods: {
     search() {
       const api = `https://api.github.com/users/${this.username}`
-      var that = this 
+
       Vue.axios.get(api).then((response) => {        
         this.data = response.data
       }).catch(error => {
         this.errorMsg = 'No user or no location!'
         this.data = []
       })
+
     }
   }
 }
