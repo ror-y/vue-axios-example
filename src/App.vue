@@ -3,7 +3,7 @@
     <form @submit.prevent="search">
       <input v-model="username" placeholder="Enter a github user!" />
     </form>
-    <p v-if="data.name">
+    <p v-if="data.name && data.location">
       {{ data.name }} ({{ data.login }})
       is from
       {{ data.location }}!
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       username: '',
-      data: []
+      data: [],
+      errorMsg: ''
     }
   },
 
@@ -31,7 +32,7 @@ export default {
     search() {
       const api = `https://api.github.com/users/${this.username}`
 
-      Vue.axios.get(api).then((response) => {        
+      Vue.axios.get(api).then(response => {        
         this.data = response.data
       }).catch(error => {
         this.errorMsg = 'No user or no location!'
