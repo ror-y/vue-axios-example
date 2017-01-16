@@ -1,13 +1,14 @@
 <template>
   <div id="app">
     <form @submit.prevent="search">
-      <input v-model="username" />
+      <input v-model="username" placeholder="Enter a github user!" />
     </form>
-    <p v-if="data">
+    <p v-if="data.name">
       {{ data.name }} ({{ data.login }})
       is from
       {{ data.location }}!
     </p>
+    <p v-else>{{ errorMsg }}</p>
   </div>
 </template>
 
@@ -22,18 +23,21 @@ export default {
   data() {
     return {
       username: '',
-      data: []
+      data: [],
+      errorMsg: 'No user or no location!'
     }
   },
 
   methods: {
     search() {
       const api = `https://api.github.com/users/${this.username}`
-
-      Vue.axios.get(api).then((response) => {
+      var that = this 
+      Vue.axios.get(api).then((response) => {        
         this.data = response.data
+        console.log('user does not exist comes here')
       }).catch(error => {
-        console.log(error)
+        this.data = []
+        console.log('user does not exist')
       })
     }
   }
