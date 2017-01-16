@@ -23,8 +23,7 @@ export default {
   data() {
     return {
       username: '',
-      data: [],
-      errorMsg: 'No user or no location!'
+      data: []
     }
   },
 
@@ -34,10 +33,9 @@ export default {
       var that = this 
       Vue.axios.get(api).then((response) => {        
         this.data = response.data
-        console.log('user does not exist comes here')
       }).catch(error => {
+        this.errorMsg = 'No user or no location!'
         this.data = []
-        console.log('user does not exist')
       })
     }
   }
